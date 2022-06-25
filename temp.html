@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>体温ランダム生成</title>
+    <link rel="icon" href="./ondokei.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+  </head>
+  <body style="margin:0 2% 0; padding:0;">
+    <h1 style="font-weight:bold;">体温ランダム生成サイト</h1>
+    <br><br>
+
+    <h4>①あなたの平均体温を入力</h4>
+    <p class="explanation">※入力しなければ36.3で処理が行われます。</p>
+    <input type="number" id="temp_box" placeholder="あなたの平均体温" value="36.3" style="width:50%; max-width:300px; min-width:100px"><br>
+    <input onclick="temp_p1()" class="temp_btn" id="temp_p1" type="button" value="+0.1">
+    <!--temp_p1 は plus +0.1の意味です  -->
+    <input onclick="temp_m1()" class="temp_btn" id="temp_m1" type="button" value="-0.1">
+    <!--temp_m1 は minus -0.1の意味です  -->
+    <br><br>
+
+    <h4>②振れ幅を入力</h4>
+    <p class="explanation">※入力しなければ±0.3で処理が行われます。</p>
+    ±<input type="number" id="haba_box" placeholder="体温の振れ幅" value="0.3" style="width:50%; max-width:300px; min-width:100px"><br>
+    <input onclick="haba_p1()" class="haba_btn" id="haba_p1" type="button" value="+0.1">
+    <input onclick="haba_m1()" class="haba_btn" id="haba_m1" type="button" value="-0.1">
+
+    <br><br><br>
+
+    <input type="button" value="体温生成実行" style="font-size:1.5rem;font-weight:bold;" onclick="enter()">
+    <br><br>
+    <h2>あなたの本日の体温は、</h2>
+    <h1 id="last_temp">00.0℃</h1>
+    <h2 style="text-align: right;">です。</h2>
+
+    <br><br>
+
+
+
+
+
+  <style type="text/css">
+    .haba_btn{
+      block:inline_block;
+    }
+    .temp_btn{
+      block:inline_block;
+    }
+    .explanation{
+      font-size: 0.7rem;
+    }
+    #last_temp{
+      text-align: center;
+      color: #fa9507;
+      margin: 0;
+    }
+    input{
+      font-size: 1.1rem;
+    }
+  </style>
+
+  <script type="text/javascript">
+
+    function temp_p1(){
+      let temp = parseFloat(document.getElementById("temp_box").value);
+      temp = Number.parseFloat(temp + 0.1).toFixed(1);
+      document.getElementById("temp_box").value = temp;
+      console.log(temp);
+    };
+
+    function temp_m1(){
+      let temp = parseFloat(document.getElementById("temp_box").value);
+      temp = Number.parseFloat(temp - 0.1).toFixed(1);
+      document.getElementById("temp_box").value = temp;
+      console.log(temp);
+    };
+
+    function haba_p1(){
+      let haba = parseFloat(document.getElementById("haba_box").value);
+      haba = Number.parseFloat(haba + 0.1).toFixed(1);
+      document.getElementById("haba_box").value = haba;
+      console.log(haba);
+    };
+
+    function haba_m1(){
+      let haba = parseFloat(document.getElementById("haba_box").value);
+      haba = Number.parseFloat(haba - 0.1).toFixed(1);
+      if (haba < 0) {
+        haba = "0.0" ;
+      }
+      document.getElementById("haba_box").value = haba;
+      console.log(haba);
+    };
+
+    function enter(){
+      let haba = parseFloat(document.getElementById("haba_box").value);
+      let habamax = haba * 10 + 1;
+      let habamin = -haba * 10;
+      let temp_pm = Math.floor(habamin + (habamax - habamin) * Math.random()) / 10;
+      console.log(temp_pm);
+      document.getElementById("last_temp").innerHTML = (parseFloat(document.getElementById("temp_box").value) + parseFloat(temp_pm)).toFixed(1) + "℃";
+      console.log(parseFloat(document.getElementById("temp_box").value) + parseFloat(temp_pm)).toFixed(1) + "℃";
+    };
+  </script>
+  
+</body>
+</html>
